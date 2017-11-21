@@ -32,6 +32,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       'process.env': env
     }),
     // UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
+  //  压缩js代码
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -57,9 +58,14 @@ const webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
+
+      // 自动生成html插件，如果创建多个HtmlWebpackPlugin的实例，就会生成多个页面
     new HtmlWebpackPlugin({
+      // 生成html文件的名字，路径相对于输出文件所在的位置
       filename: config.build.index,
+      // 源文件，路径相对于本文件所在的位置
       template: 'index.html',
+       // 要把<script>标签插入到页面哪个标签里(body|true|head|false)
       inject: true,
       minify: {
         removeComments: true,
@@ -91,12 +97,15 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract webpack runtime and module manifest to its own file in order to
     // prevent vendor hash from being updated whenever app bundle is updated
+    // 将webpack运行时和模块清单提取到自己的文件中当应用程序包被更新时，防止供应商散列被更新
+
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       minChunks: Infinity
     }),
     // This instance extracts shared chunks from code splitted chunks and bundles them
     // in a separate chunk, similar to the vendor chunk
+    // 他的实例从代码分割块中提取共享块，并将它们捆绑在一个单独的块中，类似于供应商块
     // see: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk
     new webpack.optimize.CommonsChunkPlugin({
       name: 'app',
