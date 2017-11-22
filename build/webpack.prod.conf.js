@@ -115,6 +115,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
 
     // copy custom static assets
+    // 在webpack中拷贝文件和文件夹
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),
